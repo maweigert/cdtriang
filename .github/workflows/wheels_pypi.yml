@@ -1,12 +1,9 @@
 name: build wheels and deploy
 
 on:
-  push:
-    branches:
-      - main
   create:
     tags:
-      - v*    
+      - v*
       
 jobs:
   build_wheels:
