@@ -1,6 +1,6 @@
 # cdtriang (Demo)
 
-Experimental python bindings via cpython for https://github.com/artem-ogre/CDT
+Experimental python bindings via cython for https://github.com/artem-ogre/CDT
 
 ### Install 
 
