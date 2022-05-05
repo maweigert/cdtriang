@@ -12,13 +12,6 @@ extension = Extension('cdtriang.core',
 
 
 setup(
-    name='cdtriang',
-    version='0.0.1',
-    description='Demo wrapper around CDT',
-    author='Martin Weigert',
-    author_email='marweigert@gmail.com',
-    url='https://github.com/maweigert/cdtriang',    
-    packages=['cdtriang'],
     ext_modules=[extension],
     cmdclass={"build_ext": build_ext},
 )

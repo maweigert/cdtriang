@@ -1,7 +1,7 @@
 import triangle
+import pytest
 import cdtriang.core as core
 from timeit import default_timer
-from vispy.geometry import PolygonData
 import numpy as np
 
 def sort2d(x):
@@ -20,11 +20,6 @@ def single_triang(n=6, plot=True, _assert=False, niter=10, constrained=False, se
     np.random.seed(seed)
     
     if constrained:
-        # _phi  = np.exp(1)+2*np.pi*np.linspace(0,1,n, endpoint=False)
-        # _r    = 1+0*np.random.uniform(.7,1.2,n).astype(np.float32)
-        # _r[::2] *= 1.2
-
-        # v = np.stack([_r*np.sin(_phi), _r*np.cos(_phi)], axis=-1).astype(np.float32)
         v = np.random.uniform(-1,1,(n,2)).astype(np.float32)
         v += .4*np.random.uniform(-1,1,(n,2)).astype(np.float32)
 
@@ -38,8 +33,7 @@ def single_triang(n=6, plot=True, _assert=False, niter=10, constrained=False, se
         v = np.random.uniform(-1,1,(n,2)).astype(np.float32)
         edges = None
 
-
-    v = v.round(2)
+    v = v.round(4)
     
     t1 = default_timer()
     if edges is not None:
@@ -58,10 +52,8 @@ def single_triang(n=6, plot=True, _assert=False, niter=10, constrained=False, se
 
     if verbose:
         print('vertices')
-        print(v)
-        print(', '.join(f'{{{_v[1]:.2f}, {_v[0]:.2f}}}'for _v in v))
+        print(', '.join(f'{{{_v[1]:.4f}, {_v[0]:.4f}}}'for _v in v))
         print('edges')
-        print(edges)
         print(', '.join(f'{{{_e[0]}, {_e[1]}}}'for _e in edges))
 
 
@@ -104,17 +96,24 @@ def single_triang(n=6, plot=True, _assert=False, niter=10, constrained=False, se
 
     return v, edges
     
+
+@pytest.mark.parametrize("n", (3,4,5,6,7,8,9,11,101,1001,10001))
+@pytest.mark.parametrize("constrained", (False, True))
+@pytest.mark.parametrize("seed", range(2))
+def test_triangulate(n, constrained, seed):
+    single_triang(n, plot=False, constrained=constrained, _assert=True, seed=seed)
+
+
+
 def test_many():
     for c in (True, False, ):
         for n in (3,4,5,6,7,8,9,11,101,1001,10001):
             for seed in range(1000 if n<11 else 10):
-                single_triang(n, plot=False, constrained=c, _assert=True, seed=seed)
+                single_triang(n, plot=False, constrained=c, _assert=False, seed=seed)
+
 
 if __name__ == '__main__':
 
 
-    v, edges = single_triang(n=4,seed=5,constrained=True, verbose=True)
+    v, edges = single_triang(n=4,seed=0,constrained=True, verbose=True)
 
-
-
-    # test_many()
