@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 from cdtriang import triangulate
 
 np.random.seed(42)
-vertices = np.array([[0,0],[1,0],[1,1],[1.2,.5], [0,1]])
+vertices = np.array([[0,0],[1,0],[1,1],[0.8,.5], [0,1]])
 
 tri = triangulate(vertices)
 
@@ -42,8 +42,8 @@ plt.legend()
 from cdtriang import triangulate_constrained
 
 np.random.seed(42)
-vertices = np.array([[0,0],[0,1],[1,1],[1.2,.5], [1,0]])
-edges = np.array([[0,1],[1,2],[2,3],[3,4], [4,0]])
+vertices = np.array([[0,0],[0,1],[1,1],[.8,.5], [1,0]])
+edges = np.array([[0,2]])
 
 tri = triangulate_constrained(vertices, edges)
 
